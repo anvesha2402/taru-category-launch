@@ -1,0 +1,49 @@
+{
+ "base": {
+  "ebitda24": -7255027.96766102,
+  "low_cash": -7758839.31038897,
+  "cm_per_set": 355.202506737288,
+  "breakeven_sets_m": 957.20045199869
+ },
+ "tornado_24m_ebitda": {
+  "Price, all lines \u00b110%": {
+   "low": -8881383.89089492,
+   "high": -6168600.22644068
+  },
+  "Fabric cost \u00b120%": {
+   "low": -5574763.96766102,
+   "high": -8935291.96766102
+  },
+  "Stitching (CMT) \u00b120%": {
+   "low": -6739027.96766102,
+   "high": -7771027.96766102
+  },
+  "Acquisition cost \u00b120%": {
+   "low": -6911827.96766102,
+   "high": -7598227.96766102
+  },
+  "Marketplace commission \u00b120%": {
+   "low": -6945394.22528814,
+   "high": -7564661.7100339
+  },
+  "Volume \u00b120%": {
+   "low": -7596022.37412881,
+   "high": -6914033.56119322
+  },
+  "Fixed overheads \u00b120%": {
+   "low": -5983027.96766102,
+   "high": -8527027.96766102
+  },
+  "Return rates \u00b120%": {
+   "low": -7175616.16021695,
+   "high": -7334439.77510508
+  }
+ },
+ "pivot": {
+  "ebitda24": -1809661.22264407,
+  "low_cash": -2749510.55155462,
+  "cm_per_set": 677.153911949153,
+  "breakeven_sets_m": 280.586136544785
+ },
+ "pivot_definition": "No marketplace (D2C 40%, pop-ups 30%, corporate gifting 30%); overheads \u20b91.5 lakh/month; content \u20b940k/month; launch spend \u20b95 lakh; everyday fabric at \u20b9140/m (IndiaMART GOTS poplin listing)"
+}

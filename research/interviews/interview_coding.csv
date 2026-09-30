@@ -1,0 +1,12 @@
+id,segment,mode,proof_rank_1st,proof_rank_2nd,proof_rank_3rd,organic_meaning,fit_problem,everyday_price_inr,wedding_or_gift_price_inr,too_expensive_inr,channel_preference,online_worry
+B01,self_buyer,in person,P2,P1,P3,skin health + craft,belly room; sleeve length,1500-2500,5000-8000,10000,flagship / luxury mall,size fit; no hand-feel
+B02,self_buyer,video,P1,P3,P2,skin health; sceptical without seal,chest and stomach tight,2000,6000,12000,brand app if free returns,returns
+B03,self_buyer,phone,P2,P1,P3,purity / tradition,armholes tight,1800,4500,7500,boutiques,prefers COD
+B04,self_buyer,in person,P3,P1,P2,planet / fair wages,stomach needs tailoring,2500,7000,15000,flagship,sizing accuracy
+B05,self_buyer,phone,P1,P2,P3,purity / non-GMO,buys one size up for air,1200,3500,6000,cooperative / showroom,fake fabric online
+B06,gifter,video,P2,P1,P3,care for father's skin,underarm tightness worry,,3000-5000 (gift),9000,D2C online,none stated; wants premium packaging
+B07,gifter,in person,P1,P2,P3,signals giver's ethics,sleeve shortening,,5000-10000 (gift),15000,curated online / boutique,none stated
+B08,gifter,phone,P3,P1,P2,gentle on older skin,neck too tight,,2000-3500 (gift),5000,department store / brand site,exchange ease
+B09,gifter,video,P1,P2,P3,ethical sourcing,length too long,,3000-6000 (gift),8000,D2C / multi-brand,claim verification online
+P01,practitioner,in person,P1,P3,P2,softness / luxury hand-feel,collars and armholes (40-60 segment),2000-3500,6000-15000,,flagship + multi-brand,touch drives volume
+P02,practitioner,phone,P1,P2,P3,certified supply chain,flat patterns ignore mature belly,2500,8000-20000,,,
