@@ -1,0 +1,266 @@
+{
+ "price_by_brand": {
+  "Manyavar": {
+   "n": 15,
+   "mrp_median": 4499.0,
+   "sell_median": 4499.0,
+   "sell_min": 2624.0,
+   "sell_max": 7999.0,
+   "avg_discount": 0.0,
+   "natural_fibre_share": 0.2
+  },
+  "Sojanya": {
+   "n": 14,
+   "mrp_median": 5558.0,
+   "sell_median": 1517.13,
+   "sell_min": 777.42,
+   "sell_max": 5226.36,
+   "avg_discount": 0.68,
+   "natural_fibre_share": 1.0
+  }
+ },
+ "price_by_line": {
+  "ceremonial": {
+   "count": 8.0,
+   "min": 2034.0,
+   "50%": 5363.0,
+   "max": 7999.0
+  },
+  "everyday": {
+   "count": 4.0,
+   "min": 825.0,
+   "50%": 2192.0,
+   "max": 2624.0
+  },
+  "festive": {
+   "count": 17.0,
+   "min": 777.0,
+   "50%": 2624.0,
+   "max": 6499.0
+  }
+ },
+ "certified_organic_claims_in_sets": 0,
+ "manyavar_everyday_natural_price": 2624.0,
+ "seasonal_index_2022_2025": {
+  "kurta_for_men": {
+   "Jan": 93,
+   "Feb": 103,
+   "Mar": 121,
+   "Apr": 129,
+   "May": 75,
+   "Jun": 57,
+   "Jul": 53,
+   "Aug": 80,
+   "Sep": 106,
+   "Oct": 178,
+   "Nov": 129,
+   "Dec": 77
+  },
+  "sherwani": {
+   "Jan": 132,
+   "Feb": 122,
+   "Mar": 107,
+   "Apr": 122,
+   "May": 86,
+   "Jun": 61,
+   "Jul": 54,
+   "Aug": 63,
+   "Sep": 79,
+   "Oct": 121,
+   "Nov": 142,
+   "Dec": 111
+  },
+  "linen_kurta": {
+   "Jan": 69,
+   "Feb": 86,
+   "Mar": 133,
+   "Apr": 151,
+   "May": 108,
+   "Jun": 86,
+   "Jul": 81,
+   "Aug": 97,
+   "Sep": 100,
+   "Oct": 126,
+   "Nov": 95,
+   "Dec": 68
+  },
+  "organic_cotton": {
+   "Jan": 92,
+   "Feb": 106,
+   "Mar": 104,
+   "Apr": 101,
+   "May": 103,
+   "Jun": 97,
+   "Jul": 101,
+   "Aug": 94,
+   "Sep": 93,
+   "Oct": 89,
+   "Nov": 118,
+   "Dec": 102
+  },
+  "wedding_outfit_for_men": {
+   "Jan": 120,
+   "Feb": 121,
+   "Mar": 98,
+   "Apr": 140,
+   "May": 79,
+   "Jun": 51,
+   "Jul": 41,
+   "Aug": 50,
+   "Sep": 64,
+   "Oct": 113,
+   "Nov": 195,
+   "Dec": 128
+  }
+ },
+ "peak_months": {
+  "kurta_for_men": [
+   "Oct",
+   "Apr",
+   "Nov"
+  ],
+  "sherwani": [
+   "Nov",
+   "Jan",
+   "Feb"
+  ],
+  "linen_kurta": [
+   "Apr",
+   "Mar",
+   "Oct"
+  ],
+  "organic_cotton": [
+   "Nov",
+   "Feb",
+   "Mar"
+  ],
+  "wedding_outfit_for_men": [
+   "Nov",
+   "Apr",
+   "Dec"
+  ]
+ },
+ "trough_months": {
+  "kurta_for_men": [
+   "Jul",
+   "Jun"
+  ],
+  "sherwani": [
+   "Jul",
+   "Jun"
+  ],
+  "linen_kurta": [
+   "Dec",
+   "Jan"
+  ],
+  "organic_cotton": [
+   "Oct",
+   "Jan"
+  ],
+  "wedding_outfit_for_men": [
+   "Jul",
+   "Aug"
+  ]
+ },
+ "organic_cotton_feb_2026_spike": 100,
+ "annual_mean": {
+  "kurta_for_men": {
+   "2021": 25.9,
+   "2022": 25.3,
+   "2023": 32.7,
+   "2024": 32.1,
+   "2025": 33.3,
+   "2026": 30.5
+  },
+  "sherwani": {
+   "2021": 78.9,
+   "2022": 65.5,
+   "2023": 61.1,
+   "2024": 55.8,
+   "2025": 50.8,
+   "2026": 43.5
+  },
+  "linen_kurta": {
+   "2021": 16.9,
+   "2022": 21.4,
+   "2023": 25.7,
+   "2024": 30.6,
+   "2025": 43.3,
+   "2026": 60.5
+  },
+  "organic_cotton": {
+   "2021": 8.6,
+   "2022": 8.9,
+   "2023": 8.0,
+   "2024": 8.4,
+   "2025": 10.4,
+   "2026": 20.5
+  },
+  "wedding_outfit_for_men": {
+   "2021": 20.9,
+   "2022": 18.4,
+   "2023": 25.3,
+   "2024": 32.4,
+   "2025": 42.2,
+   "2026": 42.6
+  }
+ },
+ "geo_launch_states": {
+  "Delhi": {
+   "kurta_for_men": 100,
+   "sherwani": 100,
+   "linen_kurta": 94,
+   "organic_cotton": 74,
+   "wedding_outfit_for_men": 100
+  },
+  "Maharashtra": {
+   "kurta_for_men": 85,
+   "sherwani": 72,
+   "linen_kurta": 100,
+   "organic_cotton": 74,
+   "wedding_outfit_for_men": 62
+  },
+  "Karnataka": {
+   "kurta_for_men": 59,
+   "sherwani": 63,
+   "linen_kurta": 77,
+   "organic_cotton": 77,
+   "wedding_outfit_for_men": 43
+  },
+  "Telangana": {
+   "kurta_for_men": 65,
+   "sherwani": 87,
+   "linen_kurta": 83,
+   "organic_cotton": 62,
+   "wedding_outfit_for_men": 37
+  },
+  "Haryana": {
+   "kurta_for_men": 66,
+   "sherwani": 62,
+   "linen_kurta": 83,
+   "organic_cotton": 74,
+   "wedding_outfit_for_men": 56
+  },
+  "Tamil Nadu": {
+   "kurta_for_men": 21,
+   "sherwani": 26,
+   "linen_kurta": 38,
+   "organic_cotton": 100,
+   "wedding_outfit_for_men": 18
+  },
+  "Goa": {
+   "kurta_for_men": 63,
+   "sherwani": 48,
+   "linen_kurta": 83,
+   "organic_cotton": 100,
+   "wedding_outfit_for_men": 93
+  },
+  "Gujarat": {
+   "kurta_for_men": 76,
+   "sherwani": 77,
+   "linen_kurta": 83,
+   "organic_cotton": 66,
+   "wedding_outfit_for_men": 56
+  }
+ }
+}
