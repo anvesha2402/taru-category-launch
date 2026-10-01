@@ -9,7 +9,7 @@ The guardrail answers only from the documents in `raw/`. Download each one yours
 | ASCI-AI | `asci_ai_labelling_2026_final.pdf` | ASCI Guidelines for Responsible Labelling of Synthetically Generated Content in Advertising (**final**, released 29 Sep 2026) | ascionline.in → Guidelines. Do not use the May 2026 draft |
 | LM-PCR | `legal_metrology_packaged_commodities_rules.pdf` | Legal Metrology (Packaged Commodities) Rules, 2011, latest consolidated version including e-commerce amendments | Department of Consumer Affairs / Legal Metrology section of consumeraffairs.nic.in |
 | TC-DRAFT | `textiles_committee_draft_labelling_2026.pdf` | Draft labelling regulations, March 2026 | https://textilescommittee.gov.in/wp-content/uploads/2026/03/Draft-regualtions.pdf |
-| GOTS | `gots_standard.pdf` | Global Organic Textile Standard, current version (full standard) | global-standard.org → The Standard → download |
+| GOTS | `gots_standard.pdf` | GOTS Version 8.0 (2 March 2026; your Drive file `GOTS_v8.0_signed.pdf`). Only PDF pages 12–15 are used: sections 2.5.10–3.2.10 (signs, label grades, fibre blends) | global-standard.org → The Standard → download |
 | GOTS-LABEL | `gots_label_grades.txt` | The label-grades page: select all text on the page, paste into a plain-text file | https://global-standard.org/certification-and-labelling/labelling/label-grades |
 | ITR-2026 | `it_amendment_rules_2026.pdf` | IT (Intermediary Guidelines and Digital Media Ethics Code) Amendment Rules, 2026, as notified | MeitY website (meity.gov.in) → notifications. The Khaitan & Co note (R049) links to it |
 

@@ -122,6 +122,14 @@ def test_evaluate_metrics():
     assert m["invented_clauses_passed"] == 0
 
 
+def test_errors_do_not_count_as_a_pass():
+    """40 failed API calls must not report recall 1.0 as a pass (the 404 bug of 1 Oct 2026)."""
+    gold = [{"your_label": "non-compliant"}] * 20 + [{"your_label": "compliant"}] * 20
+    res = [g.Result(str(i), "insufficient_basis", "medium", status="error") for i in range(40)]
+    m = g.evaluate(gold, res)
+    assert m["parse_or_call_errors"] == 40 and m["valid_run"] is False and m["pass_recall_0.9"] is False
+
+
 if __name__ == "__main__":
     tests = [v for k, v in dict(globals()).items() if k.startswith("test_")]
     for t in tests:

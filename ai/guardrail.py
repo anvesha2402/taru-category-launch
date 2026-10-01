@@ -52,8 +52,12 @@ DOCS = {
                "title": "Legal Metrology (Packaged Commodities) Amendment Rules, 13 Feb 2026 (country-of-origin filter on e-commerce)"},
     "TC-DRAFT": {"file": "textiles_committee_draft_labelling_2026.pdf",
                  "title": "Textiles Committee draft labelling regulations, March 2026 (draft, not in force)"},
-    "GOTS": {"file": "gots_standard.pdf",
-             "title": "Global Organic Textile Standard (current version)"},
+    "GOTS": {"file": "gots_standard.pdf",   # GOTS_v8.0_signed.pdf, 2 March 2026
+             "title": "Global Organic Textile Standard (GOTS) Version 8.0, 2026 - labelling and fibre-content sections",
+             # PDF pages 12-15 = sections 2.5.10-3.2.10 (GOTS signs, label grades, fibre blends).
+             # The rest (chemicals, social criteria, residue tables) is not about marketing claims.
+             "pages": (12, 15), "tidy": True,
+             "strip": r"^\s*Global Organic Textile Standard \(GOTS\) Version 8\.0\s*·\s*\d{4}\s*Page \d+ of \d+\s*"},
     "GOTS-LABEL": {"file": "gots_label_grades.txt",
                    "title": "GOTS label grades (web page saved as text)"},
     "ITR-2026": {"file": "it_amendment_rules_2026.pdf",
@@ -92,13 +96,21 @@ class Chunk:
         return f"{self.doc_id} {self.clause_id}"
 
 
-def read_document(path: Path) -> list[tuple[int, str]]:
-    """Return [(page_number, line)] for a PDF or text file."""
+def read_document(path: Path, pages: tuple[int, int] | None = None,
+                  strip: str | None = None) -> list[tuple[int, str]]:
+    """Return [(page_number, line)] for a PDF or text file.
+
+    pages: optional (first, last) PDF page range to keep, 1-based and inclusive.
+    strip: optional regex removed from the start of each line (running page headers)."""
     lines: list[tuple[int, str]] = []
     if path.suffix.lower() == ".pdf":
         from pypdf import PdfReader
         for p, page in enumerate(PdfReader(str(path)).pages, 1):
+            if pages and not (pages[0] <= p <= pages[1]):
+                continue
             for line in (page.extract_text() or "").splitlines():
+                if strip:
+                    line = re.sub(strip, "", line)
                 lines.append((p, line))
     else:
         for line in path.read_text(encoding="utf-8").splitlines():
@@ -108,18 +120,25 @@ def read_document(path: Path) -> list[tuple[int, str]]:
 
 
 def chunk_document(doc_id: str, lines: list[tuple[int, str]], title: str = "",
-                   heading: re.Pattern = HEADING) -> list[Chunk]:
-    """Split a document into clause chunks, keeping the clause number."""
+                   heading: re.Pattern = HEADING, tidy: bool = False) -> list[Chunk]:
+    """Split a document into clause chunks, keeping the clause number.
+
+    tidy=True (used for GOTS only, so existing clause ids elsewhere never change):
+    ignore bare-number "headings" from wrapped cross-references, and cut over-long
+    clauses that have no sub-clause markers (tables) into windows."""
     chunks: list[Chunk] = []
     cur_id, cur_page, buf = "preamble", lines[0][0] if lines else 1, []
 
     def flush():
         text = " ".join(buf).strip()
         if text:
-            chunks.extend(_split_long(doc_id, cur_id.rstrip(".)"), text, cur_page, title))
+            chunks.extend(_split_long(doc_id, cur_id.rstrip(".)"), text, cur_page, title, tidy))
 
     for page, line in lines:
         m = heading.match(line)
+        # a bare number with no words after it ("3.2.10 .") is a wrapped cross-reference, not a heading
+        if m and tidy and not re.search(r"[A-Za-z]", line[m.end():]):
+            m = None
         if m:
             flush()
             cur_id, cur_page, buf = m.group(1), page, [line.strip()]
@@ -129,7 +148,7 @@ def chunk_document(doc_id: str, lines: list[tuple[int, str]], title: str = "",
     return chunks
 
 
-def _split_long(doc_id, clause_id, text, page, title) -> list[Chunk]:
+def _split_long(doc_id, clause_id, text, page, title, tidy=False) -> list[Chunk]:
     """Split an over-long clause at its sub-clause markers: 5 → 5(1), 5(2)…"""
     if len(text) <= MAX_CHUNK_CHARS:
         return [Chunk(doc_id, clause_id, text, page, title)]
@@ -140,7 +159,19 @@ def _split_long(doc_id, clause_id, text, page, title) -> list[Chunk]:
         m = re.match(r"\s\(([^)]+)\)\s", part)
         sub = m.group(1) if m else str(len(out) + 1)
         out.append(Chunk(doc_id, f"{clause_id}({sub})", (head + " … " + part.strip()) if head and len(head) < 300 else part.strip(), page, title))
-    return out or [Chunk(doc_id, clause_id, text, page, title)]
+    if out or not tidy:
+        return out or [Chunk(doc_id, clause_id, text, page, title)]
+    # no sub-clause markers (e.g. a table): cut at word boundaries into windows
+    windows, cur = [], ""
+    for word in text.split(" "):
+        if cur and len(cur) + 1 + len(word) > MAX_CHUNK_CHARS:
+            windows.append(cur); cur = word
+        else:
+            cur = f"{cur} {word}" if cur else word
+    windows.append(cur)
+    if len(windows) == 1:
+        return [Chunk(doc_id, clause_id, text, page, title)]
+    return [Chunk(doc_id, f"{clause_id} (section {i})", w, page, title) for i, w in enumerate(windows, 1)]
 
 
 def build_chunks(kb_raw: Path = KB_RAW, docs: dict = DOCS) -> tuple[list[Chunk], dict]:
@@ -161,7 +192,8 @@ def build_chunks(kb_raw: Path = KB_RAW, docs: dict = DOCS) -> tuple[list[Chunk],
         if not path.exists():
             report[doc_id] = {"status": "MISSING", "file": meta["file"]}
             continue
-        doc_chunks = chunk_document(doc_id, read_document(path), meta["title"])
+        doc_chunks = chunk_document(doc_id, read_document(path, meta.get("pages"), meta.get("strip")), meta["title"],
+                                    tidy=meta.get("tidy", False))
         # documents that restart numbering (annexures, schedules) would repeat clause ids;
         # later repeats become e.g. "2 [part 2]" so every citation points at exactly one chunk
         seen: dict[str, int] = {}
@@ -440,12 +472,17 @@ def evaluate(gold: list[dict], results: list[Result]) -> dict:
     recall = tp / (tp + fn) if tp + fn else float("nan")
     precision = tp / (tp + fp) if tp + fp else float("nan")
     invented = sum(1 for r in results if r.status == "ok" and r.verdict != "insufficient_basis" and not r.quote_verified)
+    errors = sum(r.status in {"parse_error", "error"} for r in results)
+    # A run with call/parse errors is not a valid test: errors count as "flagged",
+    # which would inflate recall. Allow at most 5% errors before the pass counts.
+    valid_run = len(results) > 0 and errors <= 0.05 * len(results)
     return {
         "n": len(results), "tp": tp, "fp": fp, "fn": fn, "tn": tn,
         "recall_noncompliant": recall, "precision_noncompliant": precision,
-        "pass_recall_0.9": recall >= 0.9,
+        "valid_run": valid_run,
+        "pass_recall_0.9": bool(valid_run and recall >= 0.9),
         "blocked_unverified_citations": sum(r.status == "blocked_unverified_citation" for r in results),
-        "parse_or_call_errors": sum(r.status in {"parse_error", "error"} for r in results),
+        "parse_or_call_errors": errors,
         "invented_clauses_passed": invented,          # must be 0 by construction
         "total_input_tokens": sum(r.input_tokens for r in results),
         "total_output_tokens": sum(r.output_tokens for r in results),
