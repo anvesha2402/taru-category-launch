@@ -130,6 +130,20 @@ def test_errors_do_not_count_as_a_pass():
     assert m["parse_or_call_errors"] == 40 and m["valid_run"] is False and m["pass_recall_0.9"] is False
 
 
+def test_compliant_without_quote_is_not_blocked():
+    ok = {"verdict": "compliant", "risk_level": "low", "doc_id": "", "clause_id": "", "clause_quote": "",
+          "reason": "", "compliant_rewrite": "Straight-cut kurta in sizes 38 to 48"}
+    res = guard(ok).check("Straight-cut kurta in sizes 38 to 48", log=False)
+    assert res.status == "ok" and not res.flagged
+
+
+def test_compliant_with_invented_quote_is_still_blocked():
+    bad = {"verdict": "compliant", "risk_level": "low", "doc_id": "TEST", "clause_id": "4.2",
+           "clause_quote": "Processed fibres may be described as organic.", "reason": "", "compliant_rewrite": "x"}
+    res = guard(bad).check("Organic viscose kurta", log=False)
+    assert res.status == "blocked_unverified_citation" and res.flagged
+
+
 if __name__ == "__main__":
     tests = [v for k, v in dict(globals()).items() if k.startswith("test_")]
     for t in tests:

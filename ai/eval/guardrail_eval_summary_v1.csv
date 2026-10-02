@@ -1,0 +1,41 @@
+claim_id,category,your_label,verdict,status,flagged,actual,v_nc
+GC01,NC1 Generic unqualified term,non-compliant,non-compliant,blocked_unverified_citation,True,True,True
+GC02,NC1 Generic unqualified term,non-compliant,non-compliant,ok,True,True,True
+GC03,NC1 Generic unqualified term,non-compliant,non-compliant,blocked_unverified_citation,True,True,True
+GC04,NC1 Generic unqualified term,non-compliant,non-compliant,ok,True,True,True
+GC05,NC1 Generic unqualified term,non-compliant,non-compliant,ok,True,True,True
+GC06,NC4 Absolute claim,non-compliant,non-compliant,blocked_unverified_citation,True,True,True
+GC07,NC4 Absolute claim,non-compliant,non-compliant,ok,True,True,True
+GC08,NC4 Absolute claim,non-compliant,non-compliant,ok,True,True,True
+GC09,NC4 Absolute claim,non-compliant,non-compliant,ok,True,True,True
+GC10,NC3 Certification without proof,non-compliant,non-compliant,blocked_unverified_citation,True,True,True
+GC11,NC3 Certification without proof,non-compliant,non-compliant,blocked_unverified_citation,True,True,True
+GC12,NC6 Comparative or superlative,non-compliant,non-compliant,blocked_unverified_citation,True,True,True
+GC13,NC6 Comparative or superlative,non-compliant,non-compliant,ok,True,True,True
+GC14,NC7 Unclear scope,non-compliant,non-compliant,blocked_unverified_citation,True,True,True
+GC15,NC7 Unclear scope,non-compliant,non-compliant,ok,True,True,True
+GC16,NC8 Future or aspirational without a plan,non-compliant,non-compliant,ok,True,True,True
+GC17,NC5 Absence claim,non-compliant,non-compliant,ok,True,True,True
+GC18,NC9 AI or endorsement,non-compliant,non-compliant,blocked_unverified_citation,True,True,True
+GC19,NC1 Generic unqualified term + visual,non-compliant,non-compliant,ok,True,True,True
+GC20,NC4 Absolute claim,non-compliant,non-compliant,ok,True,True,True
+GC21,C3 Factual fibre composition,compliant,compliant,blocked_unverified_citation,True,False,False
+GC22,C3 Factual fibre composition,compliant,non-compliant,ok,True,False,True
+GC23,C3 Factual fibre composition,compliant,compliant,blocked_unverified_citation,True,False,False
+GC24,C3 Factual fibre composition,compliant,compliant,blocked_unverified_citation,True,False,False
+GC25,C1 Certified organic claim with proof,compliant,compliant,blocked_unverified_citation,True,False,False
+GC26,C4 Scoped evidenced claim,compliant,non-compliant,ok,True,False,True
+GC27,C4 Scoped evidenced claim,compliant,non-compliant,ok,True,False,True
+GC28,C4 Scoped evidenced claim,compliant,non-compliant,blocked_unverified_citation,True,False,True
+GC29,C4 Scoped evidenced claim,compliant,non-compliant,blocked_unverified_citation,True,False,True
+GC30,C4 Scoped evidenced claim,compliant,compliant,blocked_unverified_citation,True,False,False
+GC31,C5 Non-environmental factual claim,compliant,compliant,blocked_unverified_citation,True,False,False
+GC32,C5 Non-environmental factual claim,compliant,compliant,blocked_unverified_citation,True,False,False
+GC33,C5 Non-environmental factual claim,compliant,compliant,blocked_unverified_citation,True,False,False
+GC34,C5 Non-environmental factual claim,compliant,compliant,blocked_unverified_citation,True,False,False
+GC35,C5 Non-environmental factual claim,compliant,compliant,blocked_unverified_citation,True,False,False
+GC36,C4 AI disclosure,compliant,non-compliant,ok,True,False,True
+GC37,C5 Non-environmental factual claim,compliant,compliant,blocked_unverified_citation,True,False,False
+GC38,C2 Made-with percentage claim,compliant,non-compliant,ok,True,False,True
+GC39,C4 Aspirational claim with plan,compliant,non-compliant,blocked_unverified_citation,True,False,True
+GC40,C3 Factual fibre composition,compliant,compliant,blocked_unverified_citation,True,False,False

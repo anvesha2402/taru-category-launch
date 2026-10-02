@@ -472,7 +472,11 @@ class Guardrail:
             res = Result(claim, d["verdict"], d["risk_level"], d["doc_id"], d["clause_id"], d["clause_quote"],
                          d["reason"], d["compliant_rewrite"])
             res.quote_verified = verify_quote(d, hits) if d["verdict"] != "insufficient_basis" else False
-            res.status = "ok" if (res.quote_verified or d["verdict"] == "insufficient_basis") else "blocked_unverified_citation"
+            # A "compliant" verdict with no quote cites nothing, so there is nothing to verify
+            # (e.g. "Available in sizes 38 to 52"). Any quote that IS given must still match word for word.
+            no_citation_needed = d["verdict"] == "insufficient_basis" or (
+                d["verdict"] == "compliant" and not (d.get("clause_quote") or "").strip())
+            res.status = "ok" if (res.quote_verified or no_citation_needed) else "blocked_unverified_citation"
             if res.status != "ok":
                 res.clause_quote = "[BLOCKED: quote not found word for word in the retrieved clause]"
         except Exception as e:

@@ -30,3 +30,15 @@ The first Colab run of `07_claims_guardrail.ipynb` returned `404 NOT_FOUND` on a
 ## Decision DL-15 (2 Oct 2026): verdict model for AI4
 
 The guardrail is evaluated with Qwen2.5-7B-Instruct (open-weight, Apache 2.0), run in 4-bit on a Colab T4 GPU, instead of an API model. Reasons: no claim text leaves the notebook, no per-claim cost, and the run is fully reproducible by anyone who clones the repo. The pipeline is model-agnostic: `PROVIDER` and `MODEL` in section 2 switch it to Gemini or Claude without other changes.
+
+## Decision DL-16 (2 Oct 2026): blocking rule corrected after the first valid run
+
+In the first valid AI4 run, all 12 compliant claims that the model judged correctly were blocked, because a "compliant" verdict with no quote failed the citation check (there is no clause to quote for e.g. a size range). The rule now lets a quote-free compliant verdict stand, while any quote given must still match word for word. Both the pre-specified (v1) and corrected (v1.1) metrics are reported in `ai/eval/AI4_results.md`; the change was made after seeing results and should be confirmed on fresh claims. GC38 is flagged for re-labelling: GOTS 2.7.6.2 prescribes "Made with (x%) organic materials".
+
+## Decision DL-17 (2 Oct 2026): AI5 content agents design
+
+- **One model plays every role** (brief, copywriter, guardrail, critic): Qwen2.5-7B-Instruct, local. The critic judging text written by the same model can be lenient towards it (self-preference bias); this is why the author's scores, not the critic's, decide the voice pass test, and judge–human agreement is reported.
+- **Guardrail scope:** the AI4 guardrail checks every sentence that contains a claim trigger (fibre, certification, percentage, comparison, scan/QR, alteration and similar). Sentences with no claim, e.g. "Book a fitting on Saturday", are not sent. Brand rules (avoid-list words, exclamation marks, emojis, hashtags, competitor names, scarcity, testimonials, body shaming) are checked by code on the whole text.
+- **Approved claims:** D7 rows marked Use or Conditional; placeholders such as [licence no.] stay unfilled. Comfort words (soft, comfortable, breathable) are blocked until a wear trial supports CL08.
+- **Human scoring:** the author scores all 21 outputs (the brief mentions 30; the content plan produces 21, so all are scored rather than padding with drafts).
+- **Copy check:** competitor body copy was not collected, so similarity is measured against the 30 price-audit product titles only. This check is weak and is reported as such.
