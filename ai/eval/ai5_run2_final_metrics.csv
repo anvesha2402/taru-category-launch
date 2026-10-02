@@ -1,0 +1,13 @@
+,0
+n,21
+passed_checks,14
+pass_rate,0.6666666666666666
+pass_test_guardrail_0.9,False
+revisions_mean,1.4285714285714286
+human_scored,21
+share_human_score_ge4,0.38095238095238093
+pass_test_voice_80pct,False
+judge_exact_agreement,0.19047619047619047
+judge_within_1,0.47619047619047616
+judge_weighted_kappa,0.21641791044776126
+judge_mean_minus_human_mean,1.619047619047619

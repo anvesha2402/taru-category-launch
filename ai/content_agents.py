@@ -21,8 +21,9 @@ REPO = Path(__file__).resolve().parents[1]
 BRAND_VOICE = REPO / "ai" / "content" / "brand_voice.md"
 CLAIMS_MATRIX = REPO / "compliance" / "claims_matrix.csv"
 REQUESTS = REPO / "ai" / "eval" / "content_requests.csv"
-QUEUE = REPO / "ai" / "eval" / "content_approval_queue.csv"
+QUEUE = REPO / "ai" / "eval" / "content_approval_queue_v2.csv"
 MAX_REVISIONS = 2
+PIPELINE_VERSION = "v2"   # v1 = run of 2 Oct 2026 (2/21 passed); v2 changes listed in DL-18
 
 LENGTH = {"social_post": "40 to 80 words", "product_description": "80 to 130 words",
           "email": "a subject line, then 120 to 180 words of body"}
@@ -62,6 +63,55 @@ AVOID_WORDS = ["eco", "green", "sustainable", "sustainably", "natural", "natural
 SCARCITY = r"\b(only \d+ left|limited (stock|edition|time)|hurry|last chance|selling fast|while stocks last|don't miss out)\b"
 TESTIMONIAL = r"(\bcustomers? (say|love)|\bloved by\b|\b\d[\d,]* (happy )?customers\b|★|\breview(s|ed)? (say|call)|\"[^\"]{10,}\"\s*[-–—]\s*[A-Z][a-z]+)"
 EMOJI = re.compile("[\U0001F300-\U0001FAFF\U00002600-\U000027BF]")
+
+
+# What to do instead of each avoid-list word (from the brand book word bank), used in revision feedback
+REPLACEMENT = {
+    "perfect": "drop it and state the specific fact (the size range, the alteration window)",
+    "perfectly": "drop it and state the specific fact",
+    "comfort": "drop it: no comfort claim is approved yet (needs a wear trial)",
+    "comfortable": "drop it: no comfort claim is approved yet (needs a wear trial)",
+    "soft": "drop it: no softness claim is approved yet", "softness": "drop it: no softness claim is approved yet",
+    "breathable": "drop it: not approved", "premium": "drop it; give the fabric or the price instead",
+    "luxury": "drop it; give the fabric or the price instead", "luxurious": "drop it; give the fabric instead",
+    "exclusive": "drop it", "curated": "use 'chosen' or drop it", "timeless": "use 'made to be handed down'",
+    "iconic": "drop it", "heritage-inspired": "drop it; name the craft or place instead",
+    "transparent": "use 'see for yourself' or 'scan to check'", "sustainable": "use the approved certification wording, or drop it",
+    "sustainably": "use the approved certification wording, or drop it", "eco": "use the approved certification wording, or drop it",
+    "green": "drop it (as a colour, use 'sage' or 'bottle')", "natural": "name the fibre (cotton, linen) instead",
+    "naturally": "drop it", "conscious": "drop it", "guilt-free": "drop it", "clean": "drop it", "pure": "drop it",
+}
+
+
+def normalise_format(text: str) -> tuple[str, list[str]]:
+    """Mechanical copy-editing the brand rules require: no exclamation marks, emojis or hashtags.
+    These carry no meaning, so code fixes them instead of spending a revision on them."""
+    fixes = []
+    if "!" in text:
+        text = re.sub(r"!+", ".", text); fixes.append("exclamation marks -> full stops")
+    if EMOJI.search(text):
+        text = EMOJI.sub("", text); fixes.append("emojis removed")
+    if re.search(r"(^|\s)#\w", text):
+        text = re.sub(r"(?m)^\s*(#\w+\s*)+$", "", text)            # lines made only of hashtags
+        text = re.sub(r"(^|\s)#(\w+)", r"\1\2", text)            # inline #TARU -> TARU
+        fixes.append("hashtags removed")
+    text = re.sub(r"\.\.+", ".", text)
+    text = re.sub(r"[ \t]+", " ", re.sub(r"\n{3,}", "\n\n", text)).strip()
+    return text, fixes
+
+
+def _norm(s: str) -> str:
+    s = s.lower().replace("’", "'").replace("‘", "'").replace("“", '"').replace("”", '"')
+    return re.sub(r"[\s.]+$", "", re.sub(r"\s+", " ", s)).strip()
+
+
+def is_approved_sentence(sentence: str, claims: list[dict]) -> bool:
+    """True if the sentence is, word for word, an approved D7 claim (or one sentence of one)."""
+    n = _norm(sentence)
+    for c in claims:
+        if n == _norm(c["wording"]) or n in {_norm(x) for x in split_sentences(c["wording"])}:
+            return True
+    return False
 
 
 def rule_violations(text: str) -> list[str]:
@@ -134,6 +184,7 @@ BRAND VOICE
 CRITIC_SYSTEM = """You are the brand-voice critic for TARU. Score the draft against the brand voice below on four criteria, each 1 to 5:
 clarity (easy to read, one idea per sentence), voice (assured, warm, precise, understated; uses the word bank), claim_accuracy (only approved claims, placeholders kept, nothing overstated), call_to_action (ends with something useful to the reader).
 Then give overall (1 to 5): 5 = publish as is, 4 = minor edits, 3 = needs rework, 2 = off-brand, 1 = unusable.
+Be strict: give 5 only if you would publish it unchanged. Any avoid-list word, unapproved claim, superlative or exclamation mark caps overall at 3.
 Return one JSON object: {{"clarity": n, "voice": n, "claim_accuracy": n, "call_to_action": n, "overall": n, "note": "<one sentence>"}}
 
 BRAND VOICE
@@ -150,6 +201,7 @@ class Output:
     revisions: int = 0
     passed: bool = False
     rule_issues: list[str] = field(default_factory=list)
+    format_fixes: list[str] = field(default_factory=list)
     guardrail_issues: list[dict] = field(default_factory=list)
     critic: dict = field(default_factory=dict)
     max_similarity: float = 0.0
@@ -199,6 +251,8 @@ class ContentTeam:
         if feedback:
             user += ("\n\nYOUR PREVIOUS DRAFT\n" + previous + "\n\nFIX THESE PROBLEMS, change nothing else that works:\n"
                      + "\n".join(f"- {f}" for f in feedback))
+        user += ("\n\nBEFORE YOU ANSWER, CHECK: no exclamation marks; no hashtags; none of these words: "
+                 + ", ".join(AVOID_WORDS) + "; claims copied exactly from the approved list; [placeholders] kept.")
         return self._call(self.llm, WRITER_SYSTEM.format(voice=self.voice), user).strip()
 
     # 3. checks
@@ -207,6 +261,8 @@ class ContentTeam:
         flagged = []
         if self.guardrail is not None:
             for s in claim_sentences(text):
+                if is_approved_sentence(s, self.claims):     # human-approved in D7: not re-screened
+                    continue
                 r = self.guardrail.check(s, "TARU marketing copy (AI5 draft)")
                 if r.flagged:
                     flagged.append({"sentence": s, "verdict": r.verdict, "status": r.status,
@@ -216,7 +272,13 @@ class ContentTeam:
 
     @staticmethod
     def feedback(rules: list[str], flagged: list[dict]) -> list[str]:
-        fb = [f"Remove: {v}" for v in rules]
+        fb = []
+        for v in rules:
+            if v.startswith("avoid-list word: "):
+                w = v.split(": ", 1)[1]
+                fb.append(f'Do not use the word "{w}": {REPLACEMENT.get(w, "drop it")}.')
+            else:
+                fb.append(f"Remove: {v}")
         for f in flagged:
             if f["status"] == "blocked_unverified_citation":
                 fb.append(f'Sentence "{f["sentence"]}" could not be verified against the rules. Use approved claim wording or remove it.')
@@ -245,13 +307,13 @@ class ContentTeam:
         t0, tin0, tout0 = time.time(), self.tin, self.tout
         out = Output(req["request_id"], req["content_type"])
         out.brief = self.brief(req)
-        text = self.write(req, out.brief)
-        out.drafts.append(text)
+        text, fixes = normalise_format(self.write(req, out.brief))
+        out.drafts.append(text); out.format_fixes += fixes
         rules, flagged = self.check(text)
         while (rules or flagged) and out.revisions < MAX_REVISIONS:
             out.revisions += 1
-            text = self.write(req, out.brief, self.feedback(rules, flagged), previous=text)
-            out.drafts.append(text)
+            text, fixes = normalise_format(self.write(req, out.brief, self.feedback(rules, flagged), previous=text))
+            out.drafts.append(text); out.format_fixes += fixes
             rules, flagged = self.check(text)
         out.final_text, out.rule_issues, out.guardrail_issues = text, rules, flagged
         out.passed = not rules and not flagged
@@ -264,7 +326,7 @@ class ContentTeam:
 # Approval queue and evaluation
 # --------------------------------------------------------------------------
 
-QUEUE_COLUMNS = ["request_id", "content_type", "final_text", "passed_checks", "revisions", "open_issues",
+QUEUE_COLUMNS = ["request_id", "content_type", "final_text", "passed_checks", "revisions", "open_issues", "format_fixes",
                  "critic_overall", "critic_clarity", "critic_voice", "critic_claim_accuracy", "critic_cta", "critic_note",
                  "max_similarity_to_competitor", "seconds",
                  "your_voice_score", "your_decision", "your_edit"]
@@ -279,6 +341,7 @@ def save_queue(outputs: list[Output], path: Path = QUEUE) -> None:
             c = o.critic
             issues = o.rule_issues + [f'{g["sentence"]} -> {g["verdict"]}/{g["status"]}' for g in o.guardrail_issues]
             w.writerow([o.request_id, o.content_type, o.final_text, o.passed, o.revisions, " | ".join(issues),
+                        "; ".join(sorted(set(o.format_fixes))),
                         c.get("overall", ""), c.get("clarity", ""), c.get("voice", ""), c.get("claim_accuracy", ""),
                         c.get("call_to_action", ""), c.get("note", c.get("error", "")),
                         round(o.max_similarity, 3), round(o.seconds, 1), "", "", ""])

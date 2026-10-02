@@ -84,3 +84,23 @@ def test_approved_claims_from_d7():
 def test_sentence_split_keeps_licence_number():
     s = ca.split_sentences("Organic cotton fabric, certified by [body], licence no. [X]. Book a fitting.")
     assert s == ["Organic cotton fabric, certified by [body], licence no. [X].", "Book a fitting."]
+
+
+def test_normalise_format():
+    t, fixes = ca.normalise_format("Ready for Diwali! See you there!! #TARU #festive\n#organic #kurta")
+    assert "!" not in t and "#" not in t and "TARU" in t and len(fixes) == 2
+
+
+def test_approved_claim_sentence_not_rescreened():
+    fg = FakeGuardrail()
+    claims = [{"id": "CL03", "wording": "Scan to see where your fabric was grown and woven.", "decision": "Conditional"}]
+    seq = iter([BRIEF, "Scan to see where your fabric was grown and woven. Good for the planet.",
+                "Scan to see where your fabric was grown and woven. Visit us on Saturday.", CRITIC])
+    t = ca.ContentTeam(lambda s, u: (next(seq), 1, 1), guardrail=fg, voice="v", claims=claims)
+    o = t.run(REQ)
+    assert o.passed and "Scan to see where your fabric was grown and woven." not in fg.seen
+
+
+def test_avoid_word_feedback_gives_replacement():
+    fb = ca.ContentTeam.feedback(["avoid-list word: timeless"], [])
+    assert "handed down" in fb[0]

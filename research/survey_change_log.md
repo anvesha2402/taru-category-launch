@@ -42,3 +42,22 @@ In the first valid AI4 run, all 12 compliant claims that the model judged correc
 - **Approved claims:** D7 rows marked Use or Conditional; placeholders such as [licence no.] stay unfilled. Comfort words (soft, comfortable, breathable) are blocked until a wear trial supports CL08.
 - **Human scoring:** the author scores all 21 outputs (the brief mentions 30; the content plan produces 21, so all are scored rather than padding with drafts).
 - **Copy check:** competitor body copy was not collected, so similarity is measured against the 30 price-audit product titles only. This check is weak and is reported as such.
+
+## Decision DL-18 (2 Oct 2026): AI5 run 1 failed its pass test; pipeline v2
+
+**Run 1 (pipeline v1):** 2 of 21 outputs passed the checks within 2 revisions (target ≥ 19). Mean revisions 1.95; 38.7 minutes on a T4. Three causes, from the open-issues column (`ai/eval/AI5_run1_summary.csv`):
+1. The 7B model did not follow negative rules: exclamation marks (at least 6 outputs), hashtags (at least 5) and avoid-list words such as "perfect", "comfort", "premium", "timeless", "sustainable" (at least 11) survived both revisions.
+2. The guardrail flagged D7-approved wording itself, e.g. CL01 "Organic cotton fabric, certified by [certification body], licence no. [X]…" and CL03 "Scan to see where your fabric was grown and woven." This is the AI4 over-caution on scoped claims (AI4_results.md §4); no rewrite can fix it.
+3. The critic was lenient: it scored 14 of the 19 failing drafts at 4 or 5.
+The run-1 outputs were not scored by the author. Drive did not mount, so the full texts stayed on the Colab disk; the notebook with its printed results is kept in Drive.
+
+**Pipeline v2 changes:**
+1. Formatting the brand rules forbid (exclamation marks, emojis, hashtags) is fixed by code before checking; each fix is logged in `format_fixes`.
+2. Revision feedback gives the word-bank replacement for each avoid-list word; the hard rules are restated at the end of the copywriter prompt.
+3. A sentence that is word for word a D7 Use/Conditional claim is not re-screened by the guardrail (the author approved it in D7); any other wording still is.
+4. Critic calibration: 5 only if publishable unchanged; any avoid-list word, unapproved claim, superlative or exclamation mark caps overall at 3.
+The pass test is unchanged. Results of both runs are reported.
+
+## Decision DL-19 (2 Oct 2026): AI5 run 2 results; no further runs
+
+Run 2 (pipeline v2): 14/21 passed the checks (target 19); the author scored 8/21 at ≥ 4 for voice (target 17). Both pass tests failed and are reported as failed (`ai/eval/AI5_results.md`). Main findings: the checks do not judge voice (half of the passing outputs were rated ≤ 3); the model filled placeholders with an invented "95%" in 3 outputs, which no check caught; the critic is 1.6 points more lenient than the author (weighted κ 0.22). Decision: stop at two runs. A v3 built from these findings would need a fresh request set to avoid tuning to these 21 outputs. The content system stays at autonomy level 2.
