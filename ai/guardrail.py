@@ -377,7 +377,10 @@ def verify_quote(d: dict, hits: list[tuple[Chunk, float]]) -> bool:
 
 
 def make_llm(provider: str, model: str) -> Callable[[str, str], tuple[str, int, int]]:
-    """Return call(system, user) -> (text, input_tokens, output_tokens)."""
+    """Return call(system, user) -> (text, input_tokens, output_tokens).
+
+    provider: "local" (open-weight model via transformers, e.g. Qwen/Qwen2.5-3B-Instruct),
+    "gemini" or "anthropic" (API; key read from the environment)."""
     if provider == "anthropic":
         import anthropic
         client = anthropic.Anthropic()                       # reads ANTHROPIC_API_KEY
@@ -399,6 +402,32 @@ def make_llm(provider: str, model: str) -> Callable[[str, str], tuple[str, int, 
                                                    response_mime_type="application/json"))
             u = r.usage_metadata
             return r.text, getattr(u, "prompt_token_count", 0) or 0, getattr(u, "candidates_token_count", 0) or 0
+        return call
+    if provider == "local":
+        # Open-weight model run on the notebook's own GPU: no API key, no rate limit, no data leaves the machine.
+        import torch
+        from transformers import AutoModelForCausalLM, AutoTokenizer
+        tok = AutoTokenizer.from_pretrained(model)
+        if "7B" in model or "8B" in model:
+            # 7B in 16-bit needs ~15 GB, more than a free T4 has: load in 4-bit (~5.5 GB) instead
+            from transformers import BitsAndBytesConfig
+            q = BitsAndBytesConfig(load_in_4bit=True, bnb_4bit_quant_type="nf4",
+                                   bnb_4bit_compute_dtype=torch.float16)
+            lm = AutoModelForCausalLM.from_pretrained(model, quantization_config=q, device_map="auto")
+        else:
+            lm = AutoModelForCausalLM.from_pretrained(
+                model, torch_dtype=torch.float16 if torch.cuda.is_available() else torch.float32, device_map="auto")
+        lm.eval()
+
+        def call(system, user):
+            msgs = [{"role": "system", "content": system}, {"role": "user", "content": user}]
+            enc = tok.apply_chat_template(msgs, add_generation_prompt=True, return_tensors="pt", return_dict=True)
+            enc = {k: v.to(lm.device) for k, v in enc.items()}
+            ids = enc["input_ids"]
+            with torch.no_grad():
+                out = lm.generate(**enc, max_new_tokens=512, do_sample=False, pad_token_id=tok.eos_token_id)
+            new_tokens = out[0, ids.shape[1]:]
+            return tok.decode(new_tokens, skip_special_tokens=True), int(ids.shape[1]), int(new_tokens.shape[0])
         return call
     raise ValueError(f"unknown provider {provider}")
 
