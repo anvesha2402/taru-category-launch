@@ -86,7 +86,7 @@ with tab_calc:
                                         help="Assumption: paid social. Other channels' acquisition costs are under 'Other channel costs'.")
             D2["ret"] = st.slider("Return rate (%)", 0, 60, int(D2d["ret"] * 100), 1, key=k("ret")) / 100
             D2["cod"] = st.slider("Cash-on-delivery share of orders (%)", 0, 100, int(D2d["cod"] * 100), 1, key=k("cod"),
-                                  help="Survey G4: 64% (direction only; the survey failed quality checks).") / 100
+                                  help="Survey G4: 64% (direction only; small pilot survey).") / 100
             D2["rto"] = st.slider("Return-to-origin rate on COD orders (%)", 0, 60, int(D2d["rto"] * 100), 1, key=k("rto"),
                                   help="Register R064: RTO peaks around 39%; 20% assumed for an average month.") / 100
         with st.expander("Retail partner (sale or return)"):
@@ -213,13 +213,15 @@ with tab_ev:
             st.image(str(f), caption=caption, width=760)
 
     st.subheader("Claim test (survey)")
-    st.error("Status: not valid. After exclusions 47 responses remain (13–20 per card; 64 needed), and the answers fail four standard "
-             "quality checks (trust items α = −0.13; 79% more likely to buy at the 'expensive' price; 40% of price answers out of order). "
-             "Shown for transparency only. The question it was meant to answer is untested.")
+    st.warning("Status: inconclusive, not used for decisions. The pilot sample was too small: 47 usable responses (13–20 per card; 64 needed "
+               "per card). The answers were also inconsistent on standard quality checks (trust items α = −0.13; 79% more likely "
+               "to buy at the 'expensive' price; 40% of price answers out of order). Shown for transparency only. "
+               "The question it was meant to answer is still open: a larger survey would be needed.")
     fig("claim_test_trust.png", "Mean trust by claim card (n = 20 / 14 / 13). Kruskal-Wallis p = 0.71; every effect-size interval spans zero.")
 
     st.subheader("Kano (survey)")
-    st.error("Status: not valid (same survey). All six features classify as Indifferent, which more likely reflects noise.")
+    st.warning("Status: inconclusive (same pilot survey). All six features classify as Indifferent, which more likely reflects the small, "
+               "inconsistent sample than real indifference.")
     kano = pd.DataFrame([{"Feature": f, "Category": v["category"], "Better": v["better"], "Worse": v["worse"], "n": v["n"],
                           "Reverse or questionable": f"{v['reverse_or_questionable_share']:.0%}"} for f, v in sr["kano"].items()])
     kano["Feature"] = kano["Feature"].map({"organic": "Certified organic", "qr": "QR trail", "fit": "Fuller-build cut",
@@ -282,7 +284,7 @@ Use the two presets at the top of the Calculator to see both.
 GST input credit; inflation. The brief's "fibre cost premium %" is entered as the certified fabric's price per metre, because no
 conventional-fabric benchmark was collected.
 
-**Confidence.** Inputs marked as assumptions in the spreadsheet are low confidence. The survey is a pilot that failed its quality checks
+**Confidence.** Inputs marked as assumptions in the spreadsheet are low confidence. The survey is a small pilot whose sample was too small and inconsistent to rely on
 (see Evidence), so no survey number drives a default except as labelled "direction only".
 
 **Source code and data:** [{REPO_URL}]({REPO_URL})

@@ -67,7 +67,7 @@ def test_ai_layer_page():
     for tid in ["AI2", "AI4", "AI5", "AI6", "AI7"]:
         assert f'id="{tid.lower()}"' in page
     # headline numbers must match the results files
-    for fact in ["20 of 20", "14 of 21", "8 of 21", "1 of 20 → 8 of 20", "12.3%", "Both pass tests failed"]:
+    for fact in ["20 of 20", "14 of 21", "8 of 21", "1 of 20 → 8 of 20", "12.3%", "Below target"]:
         assert fact in page, fact
     at = run()
     assert "AI layer" in [t.label for t in at.tabs]

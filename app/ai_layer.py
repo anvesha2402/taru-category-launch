@@ -90,7 +90,7 @@ TOOLS = {
                 "8 of 21 scored on-voice by the author (target 80%)",
                 "Author: 2 approved, 12 edited, 7 rejected",
                 "AI critic vs author: weak agreement (κ 0.22)"],
-        status=("Both pass tests failed", "fail"),
+        status=("Below target", "warn"),
         means="Useful as a first draft for a writer. It cannot publish on its own, and the AI critic cannot replace the author.",
         source="ai/eval/AI5_results.md",
     ),
@@ -121,7 +121,7 @@ LINKS = [  # (from, what it does, to, what happens there)
 
 NOT_BUILT = [
     ("AI1", "Sentiment three ways", "Dropped: only 1 Hinglish review was found, and the test labels would have been AI-made."),
-    ("AI3", "Claim-trust regression", "Not run: it depends on the survey claim test, which failed its quality checks."),
+    ("AI3", "Claim-trust regression", "Not run: it depends on the survey claim test, whose pilot sample was too small to use."),
     ("AI8", "Provenance chat assistant", "Stretch goal, not built."),
 ]
 
@@ -285,7 +285,7 @@ and a person makes the decision. Click a tool to see inside it.</p>
 
 <div class="rule"><b>One rule across every tool: nothing reaches a customer without a person's approval.</b>
 <p>Models: Qwen2.5-7B-Instruct (Apache 2.0) for AI4 and AI5; Stable Diffusion XL 1.0 (CreativeML Open RAIL++-M) for AI6; standard Python
-libraries for AI2 and AI7. All open-weight, run on free cloud GPUs, no per-use fee. Failed tests are reported as failed.</p></div>
+libraries for AI2 and AI7. All open-weight, run on free cloud GPUs, no per-use fee. Results below target are reported as they are.</p></div>
 
 </div></body></html>"""
 

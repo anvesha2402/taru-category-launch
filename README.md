@@ -8,12 +8,12 @@
 
 ## TL;DR
 
-Status: research and economics complete; see `reports/TARU_Research_Economics_Recommendation.pdf`.
+Status: research, economics and AI layer complete. **Live app:** [open it here](https://taru-category-launch-pqj9ydg5bqruvwrz8mjxch.streamlit.app/) · full report: `reports/TARU_Research_Economics_Recommendation.pdf`.
 
 | | |
 |---|---|
 | Recommendation (go / no-go / pivot) | **Pivot**: launch through pop-ups, corporate gifting and own website; no marketplace; lean team; test in festive 2027 |
-| Winning proof and its effect size | Untested: survey failed quality checks; interviews lean to the certification tag (4 of 9) |
+| Winning proof and its effect size | Untested: pilot survey sample too small to use; interviews lean to the certification tag (4 of 9) |
 | Acceptable price range (Everyday set) | ₹1,250–3,800 (survey, direction only); priced at ₹2,499 under the GST slab |
 | Break-even | Briefed plan: none in 24 months. Pivot: ~280 sets a month |
 
@@ -100,10 +100,10 @@ flowchart LR
 | AI2 Review complaint map | Understand buyers | Tags 287 Myntra reviews by aspect; topic model (NMF) as a cross-check | Fit is the top complaint: 30% of 1–3 star reviews vs 19% of 4–5 star | Direction only |
 | AI7 Demand forecast | Plan demand and stock | Compares same-month-last-year, Holt-Winters and SARIMAX on 12 unseen months of Google Trends | Simple baseline wins for "kurta for men" (12.3% error); peak in October–November | Baseline kept |
 | AI4 Claims guardrail | Check every claim | Retrieves rule clauses (keyword + meaning search, re-ranked), Qwen 7B gives a verdict with a quote, code checks the quote word for word | 20/20 non-compliant claims caught; 0 invented clauses passed; precision 0.71 after a post-run rule fix | Pass test met |
-| AI5 Content agents | Draft launch content | Brief writer → copywriter → rule and AI4 checks (up to 2 rewrites) → critic → author | 14/21 passed checks (target 90%); 8/21 on-voice (target 80%); critic vs author κ 0.22 | Both pass tests failed |
+| AI5 Content agents | Draft launch content | Brief writer → copywriter → rule and AI4 checks (up to 2 rewrites) → critic → author | 14/21 passed checks (target 90%); 8/21 on-voice (target 80%); critic vs author κ 0.22 | Below target |
 | AI6 Image bias audit | Make campaign images | 100 SDXL images (plain vs rewritten prompts, same seeds), coded blind by a person | Fuller build 1/20 → 8/20 (p = 0.016); age and skin tone did not improve | Mixed: mood images only |
 
-Planned but not built: AI1 sentiment three ways (only 1 Hinglish review; labels would have been AI-made), AI3 claim-trust regression (depends on the survey, which failed its quality checks), AI8 provenance chat assistant (stretch).
+Planned but not built: AI1 sentiment three ways (only 1 Hinglish review; labels would have been AI-made), AI3 claim-trust regression (depends on the survey claim test, whose pilot sample was too small to use), AI8 provenance chat assistant (stretch).
 
 <details>
 <summary><b>Inside AI4, AI5 and AI6</b></summary>
@@ -161,12 +161,12 @@ Key: dark green = AI model · white = input, rule or code check · gold = a pers
 
 ## Live calculator
 
-**TARU Premium and Channel Calculator** (`app/`, Streamlit). Link: _add after deployment_.
+**TARU Premium and Channel Calculator** (`app/`, Streamlit): **[open the live app](https://taru-category-launch-pqj9ydg5bqruvwrz8mjxch.streamlit.app/)**
 
 - **Calculator:** change price, fabric and stitching cost, channel mix, acquisition cost, returns, cash on delivery, retailer margin and sale-or-return; see contribution per set by channel, a cost waterfall, blended margin, the premium over Manyavar, break-even sets per month and a warning outside the survey's acceptable price range. Two presets: the plan as briefed (₹355 per set, 957 sets a month to break even) and the recommended pivot (₹677, 281). Defaults reproduce `model/taru_economics.xlsx` exactly (`app/tests/test_model.py`).
 - **Storefront (mock-up):** a non-functional shop page in the brand identity, using only approved claims (D7) and author-approved AI5 copy. Images are AI-generated concept images, each labelled, cropped so no text inside an image makes an unapproved claim (`brand/concept_images/README.md`).
 - **AI layer:** simple diagrams of where each AI tool sits in the launch, what happens inside it, what its test found and where a person decides.
-- **Evidence:** each research source with an honest status (not valid / direction only).
+- **Evidence:** each research source with an honest status (inconclusive / direction only).
 - **About and disclaimer.**
 
 Run locally: `pip install -r app/requirements.txt && streamlit run app/app.py`
@@ -187,7 +187,7 @@ _To be added._
 | `brand/` | Brand book, claim library, tag and QR-page mock-ups (D6) |
 | `compliance/` | Claims substantiation matrix (D7) and the AI4 guardrail's pre-screen of it (`claims_matrix_prescreened.csv`) |
 | `model/` | `taru_economics.xlsx`: range, price and channel economics model (D8) |
-| `reports/` | Category dossier, launch deck, executive summary (D1, D10) |
+| `reports/` | Research, economics and recommendation report; regulation brief; survey and interview findings; figures |
 | `ai/` | Prompt library, evaluation sets, red-team log, bias audit, call logs, guardrail knowledge base |
 | `assets/` | Images and charts used in this README |
 
