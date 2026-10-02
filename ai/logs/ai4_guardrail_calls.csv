@@ -1,0 +1,42 @@
+timestamp,agent,prompt_version,model,input_tokens,output_tokens,latency_s,verdict,risk_level,status,claim
+2026-10-02 07:44:33,guardrail,guardrail_v1,Qwen/Qwen2.5-7B-Instruct,1510,211,16.41,non-compliant,medium,ok,Our kurtas are eco-friendly and made from natural fibres.
+2026-10-02 07:44:51,guardrail,guardrail_v1,Qwen/Qwen2.5-7B-Instruct,1992,200,17.08,non-compliant,high,blocked_unverified_citation,Our kurtas are eco-friendly.
+2026-10-02 07:45:06,guardrail,guardrail_v1,Qwen/Qwen2.5-7B-Instruct,1989,161,14.55,non-compliant,medium,ok,Go green this Diwali with TARU.
+2026-10-02 07:45:23,guardrail,guardrail_v1,Qwen/Qwen2.5-7B-Instruct,1918,180,17.72,non-compliant,medium,blocked_unverified_citation,A sustainable choice for the conscious man.
+2026-10-02 07:45:42,guardrail,guardrail_v1,Qwen/Qwen2.5-7B-Instruct,2116,195,18.44,non-compliant,medium,ok,Good for the planet and good for you.
+2026-10-02 07:46:01,guardrail,guardrail_v1,Qwen/Qwen2.5-7B-Instruct,1988,209,19.28,non-compliant,medium,ok,Planet-friendly festive wear.
+2026-10-02 07:46:18,guardrail,guardrail_v1,Qwen/Qwen2.5-7B-Instruct,1644,186,16.69,non-compliant,medium,blocked_unverified_citation,100% natural kurta set.
+2026-10-02 07:46:42,guardrail,guardrail_v1,Qwen/Qwen2.5-7B-Instruct,2770,211,23.52,non-compliant,medium,ok,Completely non-toxic fabric.
+2026-10-02 07:46:59,guardrail,guardrail_v1,Qwen/Qwen2.5-7B-Instruct,1231,212,16.64,non-compliant,high,ok,Zero environmental impact from farm to wardrobe.
+2026-10-02 07:47:19,guardrail,guardrail_v1,Qwen/Qwen2.5-7B-Instruct,1473,246,20.5,non-compliant,high,ok,Plastic-free from start to finish.
+2026-10-02 07:47:31,guardrail,guardrail_v1,Qwen/Qwen2.5-7B-Instruct,990,142,11.29,non-compliant,high,blocked_unverified_citation,Certified organic. Trust us.
+2026-10-02 07:47:45,guardrail,guardrail_v1,Qwen/Qwen2.5-7B-Instruct,2057,140,14.17,non-compliant,high,blocked_unverified_citation,Certified by leading green experts.
+2026-10-02 07:48:05,guardrail,guardrail_v1,Qwen/Qwen2.5-7B-Instruct,3252,139,19.41,non-compliant,high,blocked_unverified_citation,Greener than any other ethnic wear brand in India.
+2026-10-02 07:48:18,guardrail,guardrail_v1,Qwen/Qwen2.5-7B-Instruct,1149,166,13.42,non-compliant,medium,ok,Less harmful to the environment than regular cotton kurtas.
+2026-10-02 07:48:36,guardrail,guardrail_v1,Qwen/Qwen2.5-7B-Instruct,2012,182,17.22,non-compliant,medium,blocked_unverified_citation,Our sustainable packaging and product protect the earth.
+2026-10-02 07:48:52,guardrail,guardrail_v1,Qwen/Qwen2.5-7B-Instruct,1312,203,16.56,non-compliant,high,ok,Eco-conscious from fibre to box.
+2026-10-02 07:49:04,guardrail,guardrail_v1,Qwen/Qwen2.5-7B-Instruct,1354,138,11.38,non-compliant,medium,ok,TARU will be carbon neutral by 2030.
+2026-10-02 07:49:17,guardrail,guardrail_v1,Qwen/Qwen2.5-7B-Instruct,1544,146,12.97,non-compliant,medium,ok,"Made with no harmful azo dyes, unlike other brands."
+2026-10-02 07:49:25,guardrail,guardrail_v1,Qwen/Qwen2.5-7B-Instruct,915,96,8.12,non-compliant,medium,blocked_unverified_citation,"Loved by 10,000 happy customers who say it's the most comfortable kurta ever."
+2026-10-02 07:49:44,guardrail,guardrail_v1,Qwen/Qwen2.5-7B-Instruct,2063,190,18.27,non-compliant,medium,ok,"A leaf-green ad showing forests behind the kurta, captioned 'Nature's choice'."
+2026-10-02 07:50:02,guardrail,guardrail_v1,Qwen/Qwen2.5-7B-Instruct,1937,192,17.99,non-compliant,medium,ok,"Biodegradable kurta, returns to the earth."
+2026-10-02 07:50:08,guardrail,guardrail_v1,Qwen/Qwen2.5-7B-Instruct,1049,70,6.06,compliant,low,blocked_unverified_citation,"Fibre: 100% cotton. Care: gentle machine wash, dry in shade."
+2026-10-02 07:50:25,guardrail,guardrail_v1,Qwen/Qwen2.5-7B-Instruct,1769,185,16.91,non-compliant,high,ok,"Composition: Cotton 70%, Linen 30%. Made in India."
+2026-10-02 07:50:33,guardrail,guardrail_v1,Qwen/Qwen2.5-7B-Instruct,1436,78,7.83,compliant,low,blocked_unverified_citation,Kurta: 100% cotton. Pyjama: 100% cotton. Country of origin: India.
+2026-10-02 07:50:40,guardrail,guardrail_v1,Qwen/Qwen2.5-7B-Instruct,1395,68,6.67,compliant,low,blocked_unverified_citation,"Fabric: 55% linen, 45% cotton. Dry clean recommended."
+2026-10-02 07:50:47,guardrail,guardrail_v1,Qwen/Qwen2.5-7B-Instruct,908,81,6.85,compliant,low,blocked_unverified_citation,"Organic cotton fabric, certified by [certification body], licence no. [X]. Scan the QR code to see the certificate and what it covers."
+2026-10-02 07:50:59,guardrail,guardrail_v1,Qwen/Qwen2.5-7B-Instruct,1331,132,11.65,non-compliant,high,ok,The fabric of this kurta is certified organic cotton; the packaging is not covered by this certification.
+2026-10-02 07:51:11,guardrail,guardrail_v1,Qwen/Qwen2.5-7B-Instruct,1624,123,11.61,non-compliant,high,ok,"This box is made from 100% recycled paperboard, certified by [certification body]. The claim applies to the box only."
+2026-10-02 07:51:29,guardrail,guardrail_v1,Qwen/Qwen2.5-7B-Instruct,3073,133,18.11,non-compliant,high,blocked_unverified_citation,Scan to see where your fabric was grown and woven: farm and mill names with their certificates.
+2026-10-02 07:51:38,guardrail,guardrail_v1,Qwen/Qwen2.5-7B-Instruct,867,108,8.84,non-compliant,medium,blocked_unverified_citation,"Our certifier checks the fibre content and the processing stages of the fabric, not the dyes used in trims. Full scope at taru.example/certificate."
+2026-10-02 07:51:45,guardrail,guardrail_v1,Qwen/Qwen2.5-7B-Instruct,859,85,6.58,compliant,low,blocked_unverified_citation,"This kurta uses 40% less water in dyeing than our 2027 version, based on our mill's metered data (report linked)."
+2026-10-02 07:51:56,guardrail,guardrail_v1,Qwen/Qwen2.5-7B-Instruct,2981,60,10.83,compliant,low,blocked_unverified_citation,Free alterations within 30 days of delivery.
+2026-10-02 07:52:05,guardrail,guardrail_v1,Qwen/Qwen2.5-7B-Instruct,2272,61,8.64,compliant,low,blocked_unverified_citation,Available in sizes 38 to 52.
+2026-10-02 07:52:11,guardrail,guardrail_v1,Qwen/Qwen2.5-7B-Instruct,1070,65,5.8,compliant,low,blocked_unverified_citation,Cut with 4 cm more room through the waist than our standard block.
+2026-10-02 07:52:18,guardrail,guardrail_v1,Qwen/Qwen2.5-7B-Instruct,1533,62,6.79,compliant,low,blocked_unverified_citation,"Easy exchange within 10 days, free pick-up."
+2026-10-02 07:52:28,guardrail,guardrail_v1,Qwen/Qwen2.5-7B-Instruct,2620,69,10.37,compliant,low,blocked_unverified_citation,"Hand-block printed in Jaipur by artisans at [workshop name], named on every tag."
+2026-10-02 07:52:44,guardrail,guardrail_v1,Qwen/Qwen2.5-7B-Instruct,1866,165,15.55,non-compliant,high,ok,Lookbook image created using AI. Garment shown is the actual TARU Festive set.
+2026-10-02 07:52:53,guardrail,guardrail_v1,Qwen/Qwen2.5-7B-Instruct,2552,62,9.18,compliant,low,blocked_unverified_citation,Colour corrected in post-production to match the fabric in daylight.
+2026-10-02 07:53:08,guardrail,guardrail_v1,Qwen/Qwen2.5-7B-Instruct,1262,186,15.08,non-compliant,high,ok,"Made with organic cotton: 72% of the fibre is certified organic, licence no. [X]; the remaining 28% is conventional linen."
+2026-10-02 07:53:20,guardrail,guardrail_v1,Qwen/Qwen2.5-7B-Instruct,1320,127,11.09,non-compliant,medium,blocked_unverified_citation,"Our goal: 50% certified-organic fibre across the range by 2029. Our plan, supplier list and yearly progress are published at taru.example/plan."
+2026-10-02 07:53:26,guardrail,guardrail_v1,Qwen/Qwen2.5-7B-Instruct,1127,62,6.24,compliant,low,blocked_unverified_citation,Machine washable at 30°C; line dry.
