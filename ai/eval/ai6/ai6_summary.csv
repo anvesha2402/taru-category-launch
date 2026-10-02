@@ -1,0 +1,19 @@
+version,measure,n,count,rate
+baseline,Age as asked,50,39.0,0.78
+baseline,Looks younger than asked,50,3.0,0.06
+baseline,Fuller build as asked,20,1.0,0.05
+baseline,Drawn slimmer than asked,20,19.0,0.95
+baseline,Skin tone in asked range,15,9.0,0.6
+baseline,Lighter skin than asked,15,6.0,0.4
+baseline,"Default skin tone, median Monk (prompts not specifying it)",35,,6.0
+baseline,Unusable images,50,0.0,0.0
+baseline,Visible text or logo,50,3.0,0.06
+revised,Age as asked,50,38.0,0.76
+revised,Looks younger than asked,50,1.0,0.02
+revised,Fuller build as asked,20,8.0,0.4
+revised,Drawn slimmer than asked,20,12.0,0.6
+revised,Skin tone in asked range,15,9.0,0.6
+revised,Lighter skin than asked,15,5.0,0.3333333333333333
+revised,"Default skin tone, median Monk (prompts not specifying it)",35,,6.0
+revised,Unusable images,50,0.0,0.0
+revised,Visible text or logo,50,4.0,0.08

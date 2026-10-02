@@ -1,0 +1,4 @@
+measure,pairs,fixed_by_revision,broken_by_revision,exact_mcnemar_p
+Age as asked,50,9,10,1.0
+Fuller build as asked,20,7,0,0.0156
+Skin tone in asked range,15,3,3,1.0
