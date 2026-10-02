@@ -61,3 +61,7 @@ The pass test is unchanged. Results of both runs are reported.
 ## Decision DL-19 (2 Oct 2026): AI5 run 2 results; no further runs
 
 Run 2 (pipeline v2): 14/21 passed the checks (target 19); the author scored 8/21 at ≥ 4 for voice (target 17). Both pass tests failed and are reported as failed (`ai/eval/AI5_results.md`). Main findings: the checks do not judge voice (half of the passing outputs were rated ≤ 3); the model filled placeholders with an invented "95%" in 3 outputs, which no check caught; the critic is 1.6 points more lenient than the author (weighted κ 0.22). Decision: stop at two runs. A v3 built from these findings would need a fresh request set to avoid tuning to these 21 outputs. The content system stays at autonomy level 2.
+
+## Decision DL-20 (2 Oct 2026): AI6 run on Kaggle; coding by one blind coder
+
+The 100 AI6 images were generated on Kaggle (Colab GPU limit reached). The notebook mis-detected Kaggle as Colab because Kaggle ships the google.colab package; files were recovered from the session and the detection fixed (Kaggle is now checked first). All 100 images were coded by one person (the author's friend) from the blind coding sheet. Results are in `ai/eval/AI6_results.md`; the absence of a second coder is reported as a limitation.
