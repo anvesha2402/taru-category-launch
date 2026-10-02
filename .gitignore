@@ -1,0 +1,17 @@
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.venv/
+venv/
+.env
+.streamlit/secrets.toml
+*.key
+research/private/
+*.m4a
+*.mp3
+*.wav
+*_raw_transcript*
+.DS_Store
+Thumbs.db
+.vscode/
+ai/kb/raw/
